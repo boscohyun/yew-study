@@ -1,0 +1,13 @@
+[package]
+name = "yew-study"
+version = "0.1.0"
+edition = "2021"
+authors = ["Hyun Seungmin <boscohyun@gmail.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+stylist = "0.10.0"
+tracing = "0.1.31"
+tracing-wasm = "0.2.1"
+yew = "0.19.0"

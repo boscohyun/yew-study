@@ -1,0 +1,29 @@
+name: build
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+          profile: minimal
+      - uses: Swatinem/rust-cache@v1
+      - uses: jetli/trunk-action@v0.1.0
+        with:
+          # Optional version of trunk to install(eg. 'v0.8.1', 'latest')
+          version: "latest"
+      - run: |
+          trunk build \
+            --release \
+            --dist ./dist \
+            --public-url "/${GITHUB_REPOSITORY#*/}/"
+      - if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
